@@ -58,6 +58,76 @@ To think about:
 * How do we model behaviour?
 """
 
+import random
+
+class Island:
+    def __init__(self, grid_size=10, predator_count=5, prey_count=20):
+        """
+        Set up the Island -> square grid of size 'grid_size'. Initialize grid to all 0's, then fill with animals.
+
+        :param grid_size:
+        """
+        if not isinstance(grid_size, int):
+            self._grid_size = 10
+        else:
+            self._grid_size = grid_size
+
+        # This is a short way to create the grid using a 'list comprehension'. This creates a list
+        # 0*n or [0 for i in range(n)] and duplicates this list within an outer list -
+        # newList*n or [[0 for i in range(n)] for j in range(n)]
+        self._grid = [[0 for i in range(self._grid_size)] for j in range(self._grid_size)]
+
+        # Make a dictionary of the numbers we want for each type. This will be used later to create both types in
+        # one method.
+        if not isinstance(predator_count, int):
+            predator_count = 5
+        if not isinstance(prey_count, int):
+            prey_count = 20
+        self._animal_numbers = {"Predator": predator_count, "Prey": prey_count}
+
+    def init_animals(self):
+        ''' Put some initial animals on the island'''
+
+        # Iterate through the dictionary and make instances
+        # 'k' is the class name - Predator or Prey, a key in the dictionary. Its associated value is the count
+        # There is an element of uncertainty here. An ATTEMPT is made to create an animal each time but if the
+        # space is already occupied then we pass on silently. This means that we could end up with fewer animals
+        # then initially specified.
+
+        for k in self._animal_numbers:
+            for i in range(self._animal_numbers[k]):
+                # Generate random integers for x & y. These must be valid grid locations.
+                x = random.randint(0, self._grid_size - 1)
+                y = random.randint(0, self._grid_size - 1)
+                if not self._grid[x][y]:
+                    # globals() returns a dictionary that represents the current global namespace.
+                    # The keys of this dictionary are globally defined names, and each corresponding value is
+                    # the value for that name. Thus, globals()[k](island=self, x=x, y=y) makes an instance of 'k'
+                    # where k is a Predator or Prey. This trick avoids duplicating the code for predators and prey.
+                    # We then add the animal to the grid.
+
+                    self._grid[x][y] = globals()[k](self, x, y)
+                    # self.register(globals()[k](self, x, y))
+
+
+    def __str__(self):
+        """
+        Return a string representation of the Island -> formatted cartesian x-y grid.
+        Origin should be on bottom left of display.
+
+        :return:
+        """
+        return f""
+
+class Animal:
+    pass
+
+class Predator(Animal):
+    pass
+
+class Prey(Animal):
+    pass
+
 
 def main():
     pass
