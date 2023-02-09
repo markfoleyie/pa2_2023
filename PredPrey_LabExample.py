@@ -60,6 +60,7 @@ To think about:
 
 import random
 
+
 class Island:
     def __init__(self, grid_size=10, predator_count=5, prey_count=20):
         """
@@ -85,6 +86,10 @@ class Island:
             prey_count = 20
         self._animal_numbers = {"Predator": predator_count, "Prey": prey_count}
 
+        # We move the method to create the initial population of the island to the Island class as it is more
+        # appropriate to have it here rather than as a stand-alone function.
+        self.init_animals()
+
     def init_animals(self):
         ''' Put some initial animals on the island'''
 
@@ -109,7 +114,6 @@ class Island:
                     self._grid[x][y] = globals()[k](self, x, y)
                     # self.register(globals()[k](self, x, y))
 
-
     def __str__(self):
         """
         Return a string representation of the Island -> formatted cartesian x-y grid.
@@ -117,19 +121,92 @@ class Island:
 
         :return:
         """
-        return f""
+        s = "\n"
+        for j in range(self._grid_size - 1, -1, -1):  # print row size-1 first
+            s += "{:^4}".format(j) + "| "
+            for i in range(self._grid_size):  # each row starts at 0
+                if not self._grid[i][j]:
+                    # print a '.' for an empty space
+                    s += "{:^4}".format(".")
+                else:
+                    # print the char X or O representing the animal
+                    s += "{:^4}".format(str(self._grid[i][j]))
+            s += "\n"
+
+        s += "{:^4}".format("----") * (self._grid_size + 1) + "\n"
+        s += "{:^4}| ".format(" ")
+        for i in range(self._grid_size):
+            s += "{:^4}".format(i)
+        s += "\n"
+        return s
+
 
 class Animal:
-    pass
+    ''' This is our generic animal class. We use this because most of the values and methods such as location,
+    move, breed etc. are common to both predators and prey.
+    '''
+
+    def __init__(self, island, x=0, y=0, s="A"):
+        '''Initialize the animals and their positions
+        '''
+        self._island = island
+        self._name = s
+        self._x = x
+        self._y = y
+        # self.moved = False
+
+    def __str__(self):
+        return self._name
+
 
 class Predator(Animal):
-    pass
+    ''' This is the predator class, a specialisation of animal.
+        '''
+
+    def __init__(self, island, x=0, y=0, s="X"):
+        super().__init__(island, x, y, s)
+
 
 class Prey(Animal):
-    pass
+    ''' This is the prey class which is a specialisation of animal.
+    '''
+
+    def __init__(self, island, x=0, y=0, s="O"):
+        # Note this idiom for invoking the super class initializer. It could be considered more generic and therefore
+        # slightly more elegant than the invoking this by the superclass name. Note that you don't need self with this.
+        super().__init__(island, x, y, s)
 
 
 def main():
+    ''' Main simulation. Sets defaults, runs event loop, plots at the end
+    '''
+
+    # Initial values. User can change these.
+    PREDATOR_BREED_TIME = 6
+    # No. of clock ticks or runs through the loop a predator must wait before it can breed
+    PREY_BREED_TIME = 3
+    # No. of clock ticks or runs through the loop a prey must wait before it can breed
+    PREDATOR_STARVE_TIME = 3
+    # Predator must eat within this no. of ticks or starve
+    NUMBER_PREDATORS = 10
+    # Initial no. of predators on the island
+    NUMBER_PREY = 50
+    # Initial no. of prey on the island
+    GRID_SIZE = 20
+    # Size of the island - it will be a square 2x2 grid
+    CLOCK_TICKS = 50
+    # No. of clock ticks or times we go around the main loop
+    MOVE_ATTEMPTS = 10
+    # No. of attempts to find an adjacent space to move/breed/eat
+
+    # Make an island
+    my_island = Island(GRID_SIZE, NUMBER_PREY, NUMBER_PREDATORS)
+
+    # Event Loop
+    # Each time around the loop we give each animal a chance to do something - eat, move or breed.
+    for i in range(CLOCK_TICKS):
+        print(my_island)
+
     pass
 
 
