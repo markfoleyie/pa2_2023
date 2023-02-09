@@ -25,17 +25,20 @@ class MyClass:
 
 
 if __name__ == "__main__":
-    obj = MyClass()
-    obj2 = MyClass.fac_method()
+    try:
+        obj = MyClass()
+        obj2 = MyClass.fac_method()
 
-    print(MyClass.__class__)
-    print(obj.__class__)
+        print(MyClass.__class__)
+        print(obj.__class__)
 
-    print(obj.method())
-    print(obj.class_method())
-    print(obj.staticmethod())
+        print(obj.method())
+        print(obj.class_method())
+        print(obj.staticmethod())
 
-    print(MyClass.method(obj))
-    print(MyClass.class_method())
-    print(MyClass.staticmethod())
-    print(MyClass.method())
+        print(MyClass.method(obj))
+        print(MyClass.class_method())
+        print(MyClass.staticmethod())
+        print(MyClass.method())
+    except Exception as e:
+        print(f"ERROR: {e}")

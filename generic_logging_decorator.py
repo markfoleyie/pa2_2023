@@ -96,6 +96,15 @@ def dummy():
     print("in dummy")
 
 
+def get_square_of_int(num):
+    if not isinstance(num, int):
+        return 0
+    return num ** 2
+
+
+get_square_of_int = timer_log(get_square_of_int)
+
+
 @logit
 def dummy2():
     """
@@ -109,3 +118,7 @@ if __name__ == "__main__":
     print()
     dummy()
     dummy2()
+
+    my_num = 3
+
+    print(f"The square of {my_num} is {get_square_of_int(my_num)}")
