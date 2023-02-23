@@ -5,8 +5,6 @@ Tkinter generic tasks
 2. DO; Define the event handler routines
 3. LOOK associated with DO: Associate interesting keyboard events with their handlers.
 4. LISTEN: Loop forever, observing events. Exit when an exit event occurs.
-
-
 """
 
 import tkinter as tk
