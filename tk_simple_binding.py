@@ -5,19 +5,22 @@ from tkinter import ttk
 class MyGUI:
     def __init__(self, parent):
         self.parent = parent
-        self.frame1 = ttk.Frame(self.parent).grid()
+        self.frame1 = ttk.Frame(self.parent)
+        self.frame1.grid()
         self.label1 = ttk.Label(self.frame1, text="Starting...")
         self.label1.grid(row=0, column=0)
         self.label1.bind("<Enter>", lambda e: self.label1.configure(text="Moved mouse inside"))
         self.label1.bind("<Leave>", lambda e: self.label1.configure(text="Moved mouse outside"))
         self.label1.bind('<B3-Motion>', lambda e: self.label1.configure(text='right button drag to %d,%d' % (e.x, e.y)))
         self.button1 = ttk.Button(self.frame1, text="Print Stuff",
-                                  command=lambda a="I hit the button": self.print_handler(a)).grid(row=0, column=1)
+                                  command=lambda a="I hit the button": self.print_handler(a))
+        self.button1.grid(row=0, column=1)
         self.button2 = ttk.Button(self.frame1, text="Print More Stuff",
-                                  command=lambda a="I hit the other button": self.print_handler(a)).grid(row=0,
-                                                                                                         column=2)
+                                  command=lambda a="I hit the other button": self.print_handler(a))
+        self.button2.grid(row=0, column=2)
         self.button1 = ttk.Button(self.frame1, text="Print Stuff",
-                                  command=self.print_handler).grid(row=1, column=1)
+                                  command=self.print_handler)
+        self.button1.grid(row=1, column=1)
 
         self.choice = tk.StringVar()
         self.label2 = ttk.Label(self.frame1, textvariable=self.choice)
