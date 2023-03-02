@@ -44,6 +44,7 @@ class GUI:
         self.btn = tk.Button(self.main_frame, text="Convert", command=self.calculate_result, padx=5, pady=5, bg="red",
                              fg="white")
         self.btn.grid(row=3, column=0, columnspan=2, sticky=tk.W + tk.E)
+        self.btn.bind('<Enter>', lambda e: self.calculate_result())
 
         self.result_frame = tk.Frame(self.main_frame, padx=10, pady=10, borderwidth=2, relief=tk.SUNKEN)
         self.result_frame.grid(row=4, column=0, columnspan=2, sticky=tk.W + tk.E)
